@@ -1,5 +1,10 @@
 package com.ygz.array;
 
+/**
+  * @Author: Ygz
+  * @Description:动态数组测试类
+  * @Date：2018/6/20 17:31
+  */
 public class ArrayMain {
 
     public static void main(String[] args) {
