@@ -43,7 +43,7 @@ public class YgzArray<E> {
       * @Param：[]
       * @return int
       */
-    public int capacity(){
+    public int getCapacity(){
         return arrData.length;
     }
 
@@ -69,6 +69,10 @@ public class YgzArray<E> {
             throw new IllegalArgumentException("数组下标错误，get失败");
         }
         return arrData[index];
+    }
+
+    public E getLast(){
+        return this.get(size - 1);
     }
 
     /**
@@ -151,6 +155,16 @@ public class YgzArray<E> {
         if(size == arrData.length / 4 && arrData.length / 2 != 0)
             resize(arrData.length / 2);     //数组容量就可以减少一半  均摊复杂度
         return oldE;
+    }
+
+    /**
+      * @Author: Ygz
+      * @Description:删除数组的最后一个元素
+      * @Date：2018/6/20 22:05
+      * @return void
+      */
+    public E removeLast(){
+        return this.remove(size - 1);
     }
 
     /**
