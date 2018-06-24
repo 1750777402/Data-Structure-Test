@@ -1,5 +1,9 @@
 package com.ygz.array;
 
+/**
+ * 自定义的数组
+ * @param <E>
+ */
 public class YgzArray<E> {
 
     private E[] arrData;//实际的数组

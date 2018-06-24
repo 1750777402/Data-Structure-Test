@@ -3,7 +3,7 @@ package com.ygz.arrayStack;
 import com.ygz.array.YgzArray;
 
 /**
- * 自定义栈实现类
+ * 自定义栈实现类 基于数组
  */
 public class YgzArrayStack<E> implements YgzStack<E> {
 

@@ -5,7 +5,7 @@ package com.ygz.queue;
   * @Description: 基于数组的循环队列
   * @Date：2018/6/21 20:54
   */
-public class YgzLoopQueue<E> implements  YgzQueue<E>{
+public class YgzLoopArrayQueue<E> implements  YgzQueue<E>{
 
     //循环队列的数组
     private E[] queueArr;
@@ -20,7 +20,7 @@ public class YgzLoopQueue<E> implements  YgzQueue<E>{
       * @Param：[]
       * @return
       */
-    public YgzLoopQueue(){
+    public YgzLoopArrayQueue(){
         this(10);
     }
 
@@ -31,7 +31,7 @@ public class YgzLoopQueue<E> implements  YgzQueue<E>{
       * @Param：[capacity]
       * @return
       */
-    public YgzLoopQueue(int capacity){
+    public YgzLoopArrayQueue(int capacity){
         queueArr = (E[])new Object[capacity + 1];//循环队列会有意的空出一个为null的元素位置
     }
 
