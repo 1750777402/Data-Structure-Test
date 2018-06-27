@@ -16,7 +16,7 @@ public class BSTMain {
         //  / \    \   //
         // 2  4     8  //
         /////////////////
-        System.out.println(bst);
+//        System.out.println(bst);
 
 //        bst.frontTraverse();
 //        System.out.println();
@@ -27,6 +27,11 @@ public class BSTMain {
 //        bst.middleTraverse();
 //        System.out.println();
 
-        bst.frontTraverseNoRec();
+//        bst.frontTraverseNoRec();
+//        bst.hierarchyTraverse();
+//        System.out.println(bst.findMin());
+//        System.out.println(bst.findMax());
+        bst.remove(3);
+        bst.frontTraverse();
     }
 }

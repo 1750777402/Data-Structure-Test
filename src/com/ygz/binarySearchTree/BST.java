@@ -1,5 +1,7 @@
 package com.ygz.binarySearchTree;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -79,7 +81,7 @@ public class BST<E extends Comparable<E>> {
     }
 
     //递归的方式查看传入参数e是否在书中存在
-    public boolean containsRec(E e, Node node){
+    private boolean containsRec(E e, Node node){
         if(node == null)    //如果node为空 不管是树是不是空的  只要他递归到了node==null的 就说明这个e不在树中
             return false;
 
@@ -157,6 +159,172 @@ public class BST<E extends Comparable<E>> {
         middleTraverseRec(node.right);//再遍历右子树
     }
 
+    //树的层序遍历/广度遍历
+    public void hierarchyTraverse(){
+        Queue<Node> queue = new LinkedList<>();    //使用java的队列接口Queue实现LinkedList
+        queue.add(root);//先把树的根节点放进去
+        while (!queue.isEmpty()){   //如果队列不为空  那么就一直循环
+            //第一次循环先把跟节点拿出来  以后每次放入的是本次取出的节点的下级左右节点
+            //先放左节点再放右节点   循环就是先拿出队列的一个  再放入下级的两个
+            // 如果下级为空就不做操作 可以画图了解这个操作
+            Node cur = queue.remove();
+            System.out.println(cur.e);
+            if(null != cur.left)
+                queue.add(cur.left);
+            if(null != cur.right)
+                queue.add(cur.right);
+        }
+    }
+
+    //查找树的最小值
+    public E findMin(){
+        if(this.isEmpty())
+            throw new IllegalArgumentException("BST is empty.");
+
+        if(null == root.left)       //如果根节点的左子节点为空  那说明根节点就是最小值
+            return root.e;
+
+        Node cur = root.left;       //否则的话直接拿到跟节点的左子节点并且循环判断这个节点的左子节点是否为空
+        while (null != cur){
+            if(null != cur.left)
+                cur = cur.left;
+            else                    // 直到为空  那么这个节点就是最小值
+                break;
+        }
+        return cur.e;
+    }
+
+    // 寻找二分搜索树的最小元素递归写法
+    public E findMinRec(){
+        if(size == 0)
+            throw new IllegalArgumentException("BST is empty!");
+
+        return findMinRec(root).e;
+    }
+
+    // 返回以node为根的二分搜索树的最小值所在的节点
+    private Node findMinRec(Node node){
+        if(node.left == null)
+            return node;
+        return findMinRec(node.left);
+    }
+
+    //查找树的最大值
+    public E findMax(){
+        if(this.isEmpty())
+            throw new IllegalArgumentException("BST is empty.");
+
+        if(null == root.right)       //如果根节点的右子节点为空  那说明根节点就是最大值
+            return root.e;
+
+        Node cur = root.right;       //否则的话直接拿到跟节点的右子节点并且循环判断这个节点的右子节点是否为空
+        while (null != cur){
+            if(null != cur.right)
+                cur = cur.right;
+            else                    // 直到为空  那么这个节点就是最大值
+                break;
+        }
+        return cur.e;
+    }
+
+    // 寻找二分搜索树的最大元素的递归写法
+    public E findMaxRec(){
+        if(size == 0)
+            throw new IllegalArgumentException("BST is empty");
+
+        return findMaxRec(root).e;
+    }
+
+    // 返回以node为根的二分搜索树的最大值所在的节点
+    private Node findMaxRec(Node node){
+        if(node.right == null)
+            return node;
+
+        return findMaxRec(node.right);
+    }
+
+    //删除树的最小值  递归写法
+    public E removeMinRec(){
+        E res = this.findMin();
+        root = removeMinRec(root);
+        return res;
+    }
+
+    private Node removeMinRec(Node node){
+        if(null == node.left){              //如果一个节点的左子节点为空   因为从一开始就是往左节点开始找的
+            Node rightNode = node.right;    // 所以说明这个节点的就是最小值  先把右节点记录下来
+            node.right = null;              //然后把这个节点的右节点变成null
+            size--;                         //数量减一
+            return rightNode;               //返回这个右子节点 其实这个右子节点有可能有值也可能是null
+                                            // 如果有值  那么说明这个最小值不是叶子节点  如果没值说明是叶子节点
+                                            // 但是不管有没有值  都把这个返回并给他的上级左节点
+        }
+        node.left = removeMaxRec(node.left);  //递归调用 把每次的返回值给左子节点
+        return node;
+    }
+
+    //删除树的最大值 递归写法
+    public E removeMaxRec(){
+        E res = this.findMax();
+        root = removeMaxRec(root);
+        return res;
+    }
+
+
+    private Node removeMaxRec(Node node){
+        if(null == node.right){           //如果一个节点的右子节点为空  因为从一开始就吃往右开始找的
+            Node leftNode = node.left;    //所以说明这个节点的就是最大值   先把左节点记录下来
+            node.left = null;             //然后把这个节点的左节点变成null
+            size--;                       //数量减一
+            return leftNode;              //返回这个左子节点 其实这个左子节点有可能有值也可能是null
+                                          // 如果有值  那么说明这个最大值不是叶子节点  如果没值说明是叶子节点
+                                          //但是不管有没有值  都把这个返回并给他的上级右节点
+        }
+        node.right = removeMaxRec(node.right);  //递归调用 把每次的返回值给右子节点
+        return node;
+    }
+
+    // 从二分搜索树中删除元素为e的节点
+    public void remove(E e){
+        root = remove(root, e);
+    }
+
+    // 删除掉以node为根的二分搜索树中值为e的节点, 递归算法
+    // 返回删除节点后新的二分搜索树的根
+    private Node remove(Node node, E e){
+        if( node == null )
+            return null;
+        if( e.compareTo(node.e) < 0 ){          //如果要删的元素比当前元素小  那么继续去当前元素的左子树找
+            node.left = remove(node.left , e);
+            return node;
+        }
+        else if(e.compareTo(node.e) > 0 ){      //如果要删的元素比当前元素大  那么继续去当前元素的右子树找
+            node.right = remove(node.right, e);
+            return node;
+        }
+        else{   // e.compareTo(node.e) == 0     //如果相等那就准备删除
+            if(node.left == null){              // 待删除节点左子树为空的情况
+                Node rightNode = node.right;
+                node.right = null;
+                size --;
+                return rightNode;               //把他的右子树返回给上级的找到他的节点
+            }
+            if(node.right == null){             // 待删除节点右子树为空的情况
+                Node leftNode = node.left;
+                node.left = null;
+                size --;
+                return leftNode;                //把他的左子树返回给上级的找到他的节点
+            }
+            // 待删除节点左右子树均不为空的情况
+            // 找到比待删除节点大的最小节点, 即待删除节点右子树的最小节点
+            // 用这个节点顶替待删除节点的位置
+            Node successor = findMinRec(node.right);
+            successor.right = removeMinRec(node.right);
+            successor.left = node.left;
+            node.left = node.right = null;          //这里不用size--  因为在removeMinRec中已经减了
+            return successor;
+        }
+    }
 
     @Override
     public String toString(){
