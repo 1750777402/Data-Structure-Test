@@ -317,6 +317,7 @@ public class BST<E extends Comparable<E>> {
             }
             // 待删除节点左右子树均不为空的情况
             // 找到比待删除节点大的最小节点, 即待删除节点右子树的最小节点
+            // 也可以找比待删除节点的小的最大节点值，既待删除节点左子树的最大节点 这里使用前一种
             // 用这个节点顶替待删除节点的位置
             Node successor = findMinRec(node.right);
             successor.right = removeMinRec(node.right);
