@@ -13,3 +13,7 @@
 	<h3>&nbsp;&nbsp;&nbsp;2：YgzLinkedQueue这个类是基于链表实现的队列</h3>
 	
 <h2>&nbsp;五：com.ygz.binarySearchTree包下面是一个二叉搜索树(增删改查都有实现)</h2>
+
+<h2>&nbsp;六：com.ygz.map包下面是一个以二叉树为基础的Map映射</h2>
+
+<h2>&nbsp;七：com.ygz.maxHeap包下面是一个最大堆的实现，基础数据结构是完全二叉树，基于数组实现</h2>

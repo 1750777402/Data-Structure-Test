@@ -32,6 +32,19 @@ public class YgzArray<E> {
     }
 
     /**
+     * @Author: Ygz
+     * @Description: 传入一个数组
+     * @Date：2018/6/20 10:52
+     * @Param：[capacity]-初始数组容量
+     */
+    public YgzArray(E[] arr){
+        arrData = (E[])new Object[arr.length];
+        for(int i = 0 ; i < arr.length ; i ++)
+            arrData[i] = arr[i];
+        size = arr.length;
+    }
+
+    /**
       * @Author: Ygz
       * @Description:获取数组中的内容数量
       * @Date：2018/6/20 10:58
@@ -195,6 +208,23 @@ public class YgzArray<E> {
         int index = this.find(e);//查找这个元素是不是存在
         if(index != -1) //如果元素存在
             this.remove(index); //根据下标删除元素
+    }
+
+    /**
+     * @Author: Ygz
+     * @Description:调换下标是i和j的元素的值
+     * @Date：2018/6/20 17:00
+     * @Param：[e]
+     * @return void
+     */
+    public void swap(int i, int j){
+
+        if(i < 0 || i >= size || j < 0 || j >= size)
+            throw new IllegalArgumentException("Index is illegal.");
+
+        E t = arrData[i];
+        arrData[i] = arrData[j];
+        arrData[j] = t;
     }
 
     @Override
